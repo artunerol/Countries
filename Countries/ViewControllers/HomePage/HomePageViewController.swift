@@ -20,7 +20,9 @@ class HomePageViewController: UIViewController {
         temp.translatesAutoresizingMaskIntoConstraints = false
         temp.delegate = self
         temp.dataSource = self
-        temp.register(CountriesTableViewCell.self, forCellReuseIdentifier: CountriesTableViewCell.identifier)
+        temp.register(CountriesTableViewCell.self, forCellReuseIdentifier: CountriesTableViewCell.identifier) //Registering Cell
+        
+        temp.separatorStyle = .none // Removing lines out of tableView
         
         
         return temp
@@ -32,6 +34,7 @@ class HomePageViewController: UIViewController {
     
     init(with viewModel: HomePageViewModel) {
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
         setupViews()
         setupConstraintsForViews()

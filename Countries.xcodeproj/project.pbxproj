@@ -20,6 +20,7 @@
 		83F133042751455000BE27C7 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F133032751455000BE27C7 /* APIHandler.swift */; };
 		83F13306275147D200BE27C7 /* HomePageMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F13305275147D200BE27C7 /* HomePageMainView.swift */; };
 		83F1330827514B0700BE27C7 /* CountriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1330727514B0700BE27C7 /* CountriesTableViewCell.swift */; };
+		83F1330A275151BB00BE27C7 /* TabBarControllerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F13309275151BB00BE27C7 /* TabBarControllerBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		83F133032751455000BE27C7 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
 		83F13305275147D200BE27C7 /* HomePageMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageMainView.swift; sourceTree = "<group>"; };
 		83F1330727514B0700BE27C7 /* CountriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesTableViewCell.swift; sourceTree = "<group>"; };
+		83F13309275151BB00BE27C7 /* TabBarControllerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				83F132FC275138E000BE27C7 /* HomePageBuilder.swift */,
+				83F13309275151BB00BE27C7 /* TabBarControllerBuilder.swift */,
 			);
 			path = Builders;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			files = (
 				83F132F8275138C700BE27C7 /* HomePageViewController.swift in Sources */,
 				83F13306275147D200BE27C7 /* HomePageMainView.swift in Sources */,
+				83F1330A275151BB00BE27C7 /* TabBarControllerBuilder.swift in Sources */,
 				83F132FD275138E000BE27C7 /* HomePageBuilder.swift in Sources */,
 				83F13301275142D500BE27C7 /* SavedViewController.swift in Sources */,
 				83F133042751455000BE27C7 /* APIHandler.swift in Sources */,
