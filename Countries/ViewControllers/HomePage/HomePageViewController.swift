@@ -21,6 +21,7 @@ class HomePageViewController: UIViewController {
         temp.delegate = self
         temp.dataSource = self
         temp.register(CountriesTableViewCell.self, forCellReuseIdentifier: CountriesTableViewCell.identifier) //Registering Cell
+        temp.backgroundColor = .white
         
         temp.separatorStyle = .none // Removing lines out of tableView
         
@@ -28,7 +29,8 @@ class HomePageViewController: UIViewController {
         return temp
     }()
     
-    private var viewModel: HomePageViewModel?
+    private var viewModel : HomePageViewModel
+    private var countryDataFromAPI : APIResult?
     
     //MARK: - LifeCycle
     
@@ -45,14 +47,19 @@ class HomePageViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-    
+        super.viewDidLoad()
+            self.viewModel.getAPIResult {
+                DispatchQueue.main.async {
+                    self.countryDataFromAPI = self.viewModel.apiResult
+                    self.countriesTableView.reloadData()
+                }
+        }
     }
     
     //MARK: - Private Funcs
     
     private func setupViews() {
         view.addSubview(countriesTableView)
-        countriesTableView.backgroundColor = viewModel?.color
     }
     
     private func setupConstraintsForViews() {
@@ -63,23 +70,18 @@ class HomePageViewController: UIViewController {
             countriesTableView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
-    private func addCellObserver() {
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(asd), name: .saveButtonSelected, object: nil) //SaveButtonSelected Observer
-    }
 }
 
 //MARK: - TableView Extension
 
 extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return countryDataFromAPI?.data.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountriesTableViewCell.identifier, for: indexPath) as? CountriesTableViewCell else { return UITableViewCell() }
-        cell.countryLabel.text = viewModel?.countryTitle
+        let cell = tableView.dequeueReusableCell(withIdentifier: CountriesTableViewCell.identifier, for: indexPath) as! CountriesTableViewCell
+        cell.countryLabel.text = countryDataFromAPI?.data[indexPath.row].name
         
         return cell
     }

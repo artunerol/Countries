@@ -8,16 +8,16 @@
 import Foundation
 import UIKit
 
-struct HomePageViewModel {
+class HomePageViewModel {
     
     var color = UIColor.white
-    var countryTitle : String = " "
+    var apiResult: APIResult?
     
-    init() {
+    public func getAPIResult(with completion: @escaping () -> Void) {
         APIHandler.urlRequest { results in
             print(results)
+            self.apiResult = results
+            completion()
         }
     }
-    
 }
-
