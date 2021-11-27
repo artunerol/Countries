@@ -28,21 +28,24 @@ class HomePageViewController: UIViewController {
         return temp
     }()
     
-    private let viewModel: HomePageViewModel?
+    private var viewModel: HomePageViewModel?
     
     //MARK: - LifeCycle
     
     init(with viewModel: HomePageViewModel) {
         self.viewModel = viewModel
-        
         super.init(nibName: nil, bundle: nil)
+        
         setupViews()
         setupConstraintsForViews()
-        print("HomePage Fired")
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+    
     }
     
     //MARK: - Private Funcs
@@ -61,6 +64,10 @@ class HomePageViewController: UIViewController {
         ])
     }
     
+    private func addCellObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(asd), name: .saveButtonSelected, object: nil) //SaveButtonSelected Observer
+    }
 }
 
 //MARK: - TableView Extension
@@ -71,11 +78,18 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return CountriesTableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountriesTableViewCell.identifier, for: indexPath) as? CountriesTableViewCell else { return UITableViewCell() }
+        cell.countryLabel.text = viewModel?.countryTitle
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+    
+    @objc func asd() {
+        print("saveButtonSelected on vc")
     }
     
 }

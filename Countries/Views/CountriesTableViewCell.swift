@@ -11,6 +11,7 @@ class CountriesTableViewCell: UITableViewCell {
     
     public static let identifier = "HomePageTableViewCell"
     private var isSaveButtonSelected = false
+    public var cellIndex = 0 //cellIndex Has created in order to understand which cell has been pressed
     
     //MARK: - Computed Properties
     
@@ -33,15 +34,22 @@ class CountriesTableViewCell: UITableViewCell {
         return temp
     }()
     
+    public lazy var countryLabel: UILabel = {
+        let temp = UILabel()
+        temp.translatesAutoresizingMaskIntoConstraints = false
+        
+        return temp
+    }()
+    
     //MARK: - Life Cycle
     
-    init() {
-        super.init(style: .default, reuseIdentifier: nil)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         viewConfigurations()
         setupConstraintsForViews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -51,12 +59,13 @@ class CountriesTableViewCell: UITableViewCell {
     private func setupViews() {
         contentView.addSubview(containerView)
         containerView.addSubview(saveButton)
+        containerView.addSubview(countryLabel)
     }
     
     private func viewConfigurations() {
         addButtonAction()
     }
-    
+
     private func setupConstraintsForViews() {
         NSLayoutConstraint.activate([
             
@@ -70,13 +79,18 @@ class CountriesTableViewCell: UITableViewCell {
             
             saveButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             saveButton.topAnchor.constraint(equalTo: containerView.topAnchor,constant: 5),
-            saveButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5)
+            saveButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
+            
+            //MARK: - CountryLabel Constraints
+            
+            countryLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            countryLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
             
         ])
     }
     
     //MARK: - Save Button Action
-    private func addButtonAction() {
+    public func addButtonAction() {
         saveButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
@@ -86,10 +100,16 @@ class CountriesTableViewCell: UITableViewCell {
         if !isSaveButtonSelected {
             saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             isSaveButtonSelected = true
+            
+            UserDefaults.standard.set(countryLabel.text, forKey: "countryLabel")
+            
         }
+        
         else {
             saveButton.setImage(UIImage(systemName: "star"), for: .normal)
             isSaveButtonSelected = false
+            
+            UserDefaults.standard.removeObject(forKey: "countryLabel")
         }
     }
     
