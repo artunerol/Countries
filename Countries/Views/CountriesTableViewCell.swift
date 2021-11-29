@@ -10,8 +10,9 @@ import UIKit
 class CountriesTableViewCell: UITableViewCell {
     
     public static let identifier = "HomePageTableViewCell"
-    private var isSaveButtonSelected = false
-    public var cellIndex = 0 //cellIndex Has created in order to understand which cell has been pressed
+    
+    private var saveButtonDelegate: SaveButtonProtocol?
+    private var countryData: CountryData!
     
     //MARK: - Computed Properties
     
@@ -26,15 +27,14 @@ class CountriesTableViewCell: UITableViewCell {
         return temp
     }()
     
-    private lazy var saveButton: UIButton = {
-        let temp = UIButton()
+    private lazy var saveButton: SaveButton = {
+        let temp = SaveButton()
         temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.setImage(UIImage(systemName: "star"), for: .normal)
         
         return temp
     }()
     
-    public lazy var countryLabel: UILabel = {
+    private lazy var countryLabel: UILabel = {
         let temp = UILabel()
         temp.translatesAutoresizingMaskIntoConstraints = false
         
@@ -47,7 +47,8 @@ class CountriesTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         viewConfigurations()
-        setupConstraintsForViews()
+        
+        saveButtonDelegate = SavedViewController() //Delegation to SavedViewController
     }
 
     required init?(coder: NSCoder) {
@@ -60,6 +61,8 @@ class CountriesTableViewCell: UITableViewCell {
         contentView.addSubview(containerView)
         containerView.addSubview(saveButton)
         containerView.addSubview(countryLabel)
+        
+        setupConstraintsForViews()
     }
     
     private func viewConfigurations() {
@@ -69,24 +72,33 @@ class CountriesTableViewCell: UITableViewCell {
     private func setupConstraintsForViews() {
         NSLayoutConstraint.activate([
             
-            //MARK: - ContainerView Constraints
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 5),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -5),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: contentView.frame.width/6), // Setting leadingAnchor for containverView
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -(contentView.frame.width/6)), //Setting trailing Anchor for containerView
             
-            //MARK: - SaveButton Constraints
             
             saveButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             saveButton.topAnchor.constraint(equalTo: containerView.topAnchor,constant: 5),
             saveButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
             
-            //MARK: - CountryLabel Constraints
             
             countryLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
             countryLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
             
         ])
+    }
+    
+    //MARK: - Public Funcs
+    
+    public func configureCell(with data: CountryData) {
+//        
+//        if UserDefaults.standard.bool(forKey: data.name) {
+//            saveButton.saveButtonSelected(for: countryData.name)
+//        }
+        
+        self.countryData = data //Getting the api data of the cell
+        countryLabel.text = data.name
     }
     
     //MARK: - Save Button Action
@@ -96,21 +108,20 @@ class CountriesTableViewCell: UITableViewCell {
     
     @objc func buttonTapped() {
         //If Button is selected fill the image. Else unfill it.
+        let isSaveButtonSelected = UserDefaults.standard.bool(forKey: countryData.name)
         
         if !isSaveButtonSelected {
-            saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            isSaveButtonSelected = true
-            
-            UserDefaults.standard.set(countryLabel.text, forKey: "countryLabel")
+            saveButton.saveButtonSelected(for: countryData.name)
+            saveButtonDelegate?.saveButtonClicked(with: countryData) //Delegation for button clicked
             
         }
         
-        else {
-            saveButton.setImage(UIImage(systemName: "star"), for: .normal)
-            isSaveButtonSelected = false
+        if isSaveButtonSelected {
+            saveButton.saveButtonUnselected(for: countryData.name)
+            saveButtonDelegate?.unsaveButtonClicked(with: countryData)
             
-            UserDefaults.standard.removeObject(forKey: "countryLabel")
         }
     }
     
 }
+

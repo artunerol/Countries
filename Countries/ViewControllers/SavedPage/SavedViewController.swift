@@ -8,8 +8,6 @@
 import UIKit
 
 class SavedViewController: UIViewController {
-    
-    public static let shared = SavedViewController()
 
     public lazy var countriesTableView: UITableView = {
         let temp = UITableView()
@@ -24,19 +22,22 @@ class SavedViewController: UIViewController {
         return temp
     }()
     
-    public var countryName: String = "" {
-        didSet {
-            countriesTableView.reloadData()
-        }
-    }
-
+    private static var countryDataArray : [CountryData] = []
+    
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstraintsForViews()
-
-        // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        countriesTableView.reloadData()
+    }
+    
+    //MARK: - View Configurations
     
     private func setupViews() {
         view.addSubview(countriesTableView)
@@ -51,19 +52,18 @@ class SavedViewController: UIViewController {
             countriesTableView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-
 }
 
 //MARK: - TableView Extension
 
 extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return SavedViewController.countryDataArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountriesTableViewCell.identifier, for: indexPath) as? CountriesTableViewCell else { return UITableViewCell() }
-        cell.countryLabel.text = countryName
+        let cell = tableView.dequeueReusableCell(withIdentifier: CountriesTableViewCell.identifier, for: indexPath) as! CountriesTableViewCell
+        cell.configureCell(with: SavedViewController.countryDataArray[indexPath.row])
         
         return cell
     }
@@ -71,9 +71,25 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
+}
+
+//MARK: -
+
+extension SavedViewController: SaveButtonProtocol {
     
-    @objc func asd() {
-        print("saveButtonSelected on vc")
+    func saveButtonClicked(with data: CountryData) {
+            SavedViewController.countryDataArray.append(data)
+            print("countryData in savevc is \(SavedViewController.countryDataArray)")
+            DispatchQueue.main.async {
+                self.countriesTableView.reloadData()
+            }
+    }
+    
+    func unsaveButtonClicked(with data: CountryData) {
+        //Removing related data if unsaved
+        SavedViewController.countryDataArray.removeAll { dataToRemove in
+            dataToRemove == data
+        }
     }
     
 }

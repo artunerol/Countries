@@ -15,7 +15,7 @@ class HomePageViewController: UIViewController {
     
     //MARK: - Computed Properties
     
-    private lazy var countriesTableView: UITableView = {
+    private lazy var countriesListTableView: UITableView = {
         let temp = UITableView()
         temp.translatesAutoresizingMaskIntoConstraints = false
         temp.delegate = self
@@ -30,7 +30,7 @@ class HomePageViewController: UIViewController {
     }()
     
     private var viewModel : HomePageViewModel
-    private var countryDataFromAPI : APIResult?
+    private var countryDataFromAPI : CountryDataFromAPI?
     
     //MARK: - LifeCycle
     
@@ -48,26 +48,27 @@ class HomePageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            self.viewModel.getAPIResult {
-                DispatchQueue.main.async {
-                    self.countryDataFromAPI = self.viewModel.apiResult
-                    self.countriesTableView.reloadData()
-                }
+        //Getting API Result in viewDidLoad. And after getting the result, reloading the tableView.
+        self.viewModel.getAPIResult {
+            DispatchQueue.main.async {
+                self.countryDataFromAPI = self.viewModel.apiResult
+                self.countriesListTableView.reloadData()
+            }
         }
     }
     
     //MARK: - Private Funcs
     
     private func setupViews() {
-        view.addSubview(countriesTableView)
+        view.addSubview(countriesListTableView)
     }
     
     private func setupConstraintsForViews() {
         NSLayoutConstraint.activate([
-            countriesTableView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            countriesTableView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            countriesTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            countriesTableView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            countriesListTableView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            countriesListTableView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            countriesListTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            countriesListTableView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }
@@ -81,7 +82,9 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CountriesTableViewCell.identifier, for: indexPath) as! CountriesTableViewCell
-        cell.countryLabel.text = countryDataFromAPI?.data[indexPath.row].name
+        
+        let countryData = countryDataFromAPI!.data[indexPath.row]
+        cell.configureCell(with: countryData)
         
         return cell
     }
@@ -89,9 +92,4 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
-    
-    @objc func asd() {
-        print("saveButtonSelected on vc")
-    }
-    
 }

@@ -11,11 +11,12 @@ import UIKit
 class HomePageViewModel {
     
     var color = UIColor.white
-    var apiResult: APIResult?
+    var apiResult: CountryDataFromAPI?
+    
+    //Getting API result via viewModel
     
     public func getAPIResult(with completion: @escaping () -> Void) {
         APIHandler.urlRequest { results in
-            print(results)
             self.apiResult = results
             completion()
         }

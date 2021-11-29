@@ -12,6 +12,7 @@ class HomePageBuilder {
     static func build() -> UIViewController {
         let viewModel = HomePageViewModel()
         let vc = HomePageViewController(with: viewModel)
+        vc.navigationItem.title = "Countries"
         
         return vc
     }
