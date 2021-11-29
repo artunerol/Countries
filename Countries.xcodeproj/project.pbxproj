@@ -28,6 +28,8 @@
 		83F133362753F9FF00BE27C7 /* SavePageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F133352753F9FF00BE27C7 /* SavePageBuilder.swift */; };
 		83F1333827540B5F00BE27C7 /* Userdefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1333727540B5F00BE27C7 /* Userdefaults+Extension.swift */; };
 		83F1333A27540F5E00BE27C7 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1333927540F5E00BE27C7 /* SaveButton.swift */; };
+		83F1333F2754FDD900BE27C7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1333E2754FDD900BE27C7 /* DetailViewController.swift */; };
+		83F133412754FDE100BE27C7 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F133402754FDE100BE27C7 /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		83F133352753F9FF00BE27C7 /* SavePageBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePageBuilder.swift; sourceTree = "<group>"; };
 		83F1333727540B5F00BE27C7 /* Userdefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Userdefaults+Extension.swift"; sourceTree = "<group>"; };
 		83F1333927540F5E00BE27C7 /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
+		83F1333E2754FDD900BE27C7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		83F133402754FDE100BE27C7 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +139,8 @@
 		83F132FE2751399000BE27C7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				83F1330727514B0700BE27C7 /* CountriesTableViewCell.swift */,
-				83F1333927540F5E00BE27C7 /* SaveButton.swift */,
+				83F1333C2754FDC000BE27C7 /* CustomSaveButton */,
+				83F1333B2754FDB600BE27C7 /* TableViewCell */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -144,6 +148,7 @@
 		83F132FF2751399A00BE27C7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				83F1333D2754FDCB00BE27C7 /* DetailViewController */,
 				83F132F62751388000BE27C7 /* SavedPage */,
 				83F132F52751387500BE27C7 /* HomePage */,
 			);
@@ -190,6 +195,31 @@
 				83F133022751452F00BE27C7 /* APIHandler */,
 			);
 			path = Handlers;
+			sourceTree = "<group>";
+		};
+		83F1333B2754FDB600BE27C7 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				83F1330727514B0700BE27C7 /* CountriesTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		83F1333C2754FDC000BE27C7 /* CustomSaveButton */ = {
+			isa = PBXGroup;
+			children = (
+				83F1333927540F5E00BE27C7 /* SaveButton.swift */,
+			);
+			path = CustomSaveButton;
+			sourceTree = "<group>";
+		};
+		83F1333D2754FDCB00BE27C7 /* DetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				83F1333E2754FDD900BE27C7 /* DetailViewController.swift */,
+				83F133402754FDE100BE27C7 /* DetailViewModel.swift */,
+			);
+			path = DetailViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,6 +296,7 @@
 				83F1331F2753A8A200BE27C7 /* SaveButtonProtocol.swift in Sources */,
 				83F132F8275138C700BE27C7 /* HomePageViewController.swift in Sources */,
 				83F1330A275151BB00BE27C7 /* TabBarControllerBuilder.swift in Sources */,
+				83F133412754FDE100BE27C7 /* DetailViewModel.swift in Sources */,
 				83F133102752518000BE27C7 /* CoreDataModel.xcdatamodeld in Sources */,
 				83F132FD275138E000BE27C7 /* HomePageBuilder.swift in Sources */,
 				83F13301275142D500BE27C7 /* SavedViewController.swift in Sources */,
@@ -273,6 +304,7 @@
 				83F133042751455000BE27C7 /* APIHandler.swift in Sources */,
 				83F1330D2752359100BE27C7 /* Notification.Name+Extension.swift in Sources */,
 				83F1331B27526DA300BE27C7 /* CountryDataFromAPI.swift in Sources */,
+				83F1333F2754FDD900BE27C7 /* DetailViewController.swift in Sources */,
 				83F1333A27540F5E00BE27C7 /* SaveButton.swift in Sources */,
 				83F1330827514B0700BE27C7 /* CountriesTableViewCell.swift in Sources */,
 				83F132E22751341100BE27C7 /* AppDelegate.swift in Sources */,
