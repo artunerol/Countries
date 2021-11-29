@@ -77,11 +77,9 @@ class CountriesTableViewCell: UITableViewCell {
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: contentView.frame.width/6), // Setting leadingAnchor for containverView
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -(contentView.frame.width/6)), //Setting trailing Anchor for containerView
             
-            
             saveButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             saveButton.topAnchor.constraint(equalTo: containerView.topAnchor,constant: 5),
             saveButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
-            
             
             countryLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
             countryLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)

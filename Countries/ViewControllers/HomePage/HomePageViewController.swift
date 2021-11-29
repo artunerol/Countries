@@ -49,15 +49,15 @@ class HomePageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //Getting API Result in viewDidLoad. And after getting the result, reloading the tableView.
-        self.viewModel.getAPIResult {
+        self.viewModel.getAPIResult { [weak self] in
             DispatchQueue.main.async {
-                self.countryDataFromAPI = self.viewModel.apiResult
-                self.countriesListTableView.reloadData()
+                self?.countryDataFromAPI = self?.viewModel.apiResult
+                self?.countriesListTableView.reloadData()
             }
         }
     }
     
-    //MARK: - Private Funcs
+    //MARK: - Setting up the Views
     
     private func setupViews() {
         view.addSubview(countriesListTableView)
@@ -87,6 +87,15 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell(with: countryData)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailViewModel = DetailViewModel()
+        detailViewModel.countryCode = countryDataFromAPI?.data[indexPath.row].code
+        detailViewModel.wikiDataID = countryDataFromAPI?.data[indexPath.row].wikiDataId
+        navigationController?.pushViewController(DetailViewController(with: detailViewModel), animated: true)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

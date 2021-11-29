@@ -19,7 +19,6 @@
 		83F133042751455000BE27C7 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F133032751455000BE27C7 /* APIHandler.swift */; };
 		83F1330827514B0700BE27C7 /* CountriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1330727514B0700BE27C7 /* CountriesTableViewCell.swift */; };
 		83F1330A275151BB00BE27C7 /* TabBarControllerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F13309275151BB00BE27C7 /* TabBarControllerBuilder.swift */; };
-		83F1330D2752359100BE27C7 /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1330C2752359100BE27C7 /* Notification.Name+Extension.swift */; };
 		83F133102752518000BE27C7 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83F1330E2752518000BE27C7 /* CoreDataModel.xcdatamodeld */; };
 		83F1331B27526DA300BE27C7 /* CountryDataFromAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1331A27526DA300BE27C7 /* CountryDataFromAPI.swift */; };
 		83F1331D27526E0500BE27C7 /* CountryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1331C27526E0500BE27C7 /* CountryData.swift */; };
@@ -30,6 +29,10 @@
 		83F1333A27540F5E00BE27C7 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1333927540F5E00BE27C7 /* SaveButton.swift */; };
 		83F1333F2754FDD900BE27C7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1333E2754FDD900BE27C7 /* DetailViewController.swift */; };
 		83F133412754FDE100BE27C7 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F133402754FDE100BE27C7 /* DetailViewModel.swift */; };
+		83F133432755488D00BE27C7 /* CountryImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F133422755488D00BE27C7 /* CountryImageData.swift */; };
+		83F1334727554AE600BE27C7 /* CountryImageDataDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1334627554AE600BE27C7 /* CountryImageDataDetails.swift */; };
+		83F1334927554BD900BE27C7 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1334827554BD900BE27C7 /* UIImage+Extension.swift */; };
+		83F1334C2755577100BE27C7 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1334B2755577100BE27C7 /* UIImageView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +50,6 @@
 		83F133032751455000BE27C7 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
 		83F1330727514B0700BE27C7 /* CountriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesTableViewCell.swift; sourceTree = "<group>"; };
 		83F13309275151BB00BE27C7 /* TabBarControllerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerBuilder.swift; sourceTree = "<group>"; };
-		83F1330C2752359100BE27C7 /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		83F1330F2752518000BE27C7 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		83F1331A27526DA300BE27C7 /* CountryDataFromAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDataFromAPI.swift; sourceTree = "<group>"; };
 		83F1331C27526E0500BE27C7 /* CountryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryData.swift; sourceTree = "<group>"; };
@@ -58,6 +60,10 @@
 		83F1333927540F5E00BE27C7 /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
 		83F1333E2754FDD900BE27C7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		83F133402754FDE100BE27C7 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		83F133422755488D00BE27C7 /* CountryImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryImageData.swift; sourceTree = "<group>"; };
+		83F1334627554AE600BE27C7 /* CountryImageDataDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryImageDataDetails.swift; sourceTree = "<group>"; };
+		83F1334827554BD900BE27C7 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		83F1334B2755577100BE27C7 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,8 +172,9 @@
 		83F1330B2752358000BE27C7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				83F1330C2752359100BE27C7 /* Notification.Name+Extension.swift */,
 				83F1333727540B5F00BE27C7 /* Userdefaults+Extension.swift */,
+				83F1334827554BD900BE27C7 /* UIImage+Extension.swift */,
+				83F1334B2755577100BE27C7 /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -183,8 +190,8 @@
 		83F1331927526D9700BE27C7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				83F1331A27526DA300BE27C7 /* CountryDataFromAPI.swift */,
-				83F1331C27526E0500BE27C7 /* CountryData.swift */,
+				83F1334527554AC900BE27C7 /* CountryData */,
+				83F1334427554AC000BE27C7 /* CountryImage */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +199,7 @@
 		83F133242753AEB400BE27C7 /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				83F1334A275552FB00BE27C7 /* WikiDataHandler */,
 				83F133022751452F00BE27C7 /* APIHandler */,
 			);
 			path = Handlers;
@@ -220,6 +228,31 @@
 				83F133402754FDE100BE27C7 /* DetailViewModel.swift */,
 			);
 			path = DetailViewController;
+			sourceTree = "<group>";
+		};
+		83F1334427554AC000BE27C7 /* CountryImage */ = {
+			isa = PBXGroup;
+			children = (
+				83F133422755488D00BE27C7 /* CountryImageData.swift */,
+				83F1334627554AE600BE27C7 /* CountryImageDataDetails.swift */,
+			);
+			path = CountryImage;
+			sourceTree = "<group>";
+		};
+		83F1334527554AC900BE27C7 /* CountryData */ = {
+			isa = PBXGroup;
+			children = (
+				83F1331A27526DA300BE27C7 /* CountryDataFromAPI.swift */,
+				83F1331C27526E0500BE27C7 /* CountryData.swift */,
+			);
+			path = CountryData;
+			sourceTree = "<group>";
+		};
+		83F1334A275552FB00BE27C7 /* WikiDataHandler */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WikiDataHandler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,14 +328,17 @@
 			files = (
 				83F1331F2753A8A200BE27C7 /* SaveButtonProtocol.swift in Sources */,
 				83F132F8275138C700BE27C7 /* HomePageViewController.swift in Sources */,
+				83F133432755488D00BE27C7 /* CountryImageData.swift in Sources */,
 				83F1330A275151BB00BE27C7 /* TabBarControllerBuilder.swift in Sources */,
+				83F1334C2755577100BE27C7 /* UIImageView+Extension.swift in Sources */,
 				83F133412754FDE100BE27C7 /* DetailViewModel.swift in Sources */,
 				83F133102752518000BE27C7 /* CoreDataModel.xcdatamodeld in Sources */,
 				83F132FD275138E000BE27C7 /* HomePageBuilder.swift in Sources */,
+				83F1334727554AE600BE27C7 /* CountryImageDataDetails.swift in Sources */,
 				83F13301275142D500BE27C7 /* SavedViewController.swift in Sources */,
+				83F1334927554BD900BE27C7 /* UIImage+Extension.swift in Sources */,
 				83F133342753F8B400BE27C7 /* SavedPageViewModel.swift in Sources */,
 				83F133042751455000BE27C7 /* APIHandler.swift in Sources */,
-				83F1330D2752359100BE27C7 /* Notification.Name+Extension.swift in Sources */,
 				83F1331B27526DA300BE27C7 /* CountryDataFromAPI.swift in Sources */,
 				83F1333F2754FDD900BE27C7 /* DetailViewController.swift in Sources */,
 				83F1333A27540F5E00BE27C7 /* SaveButton.swift in Sources */,

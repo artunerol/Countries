@@ -9,4 +9,6 @@ import Foundation
 
 struct CountryData: Codable,Equatable {
     let name : String
+    let code: String
+    let wikiDataId: String    
 }

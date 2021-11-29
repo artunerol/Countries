@@ -12,7 +12,6 @@ class TabBarControllerBuilder {
    static func build() -> UIViewController {
         let homePageViewController = HomePageBuilder.build()
        homePageViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill")) // Setting tab bar Item name and images for HomePage
-       homePageViewController.navigationController?.title = "Countries"
        
        let savedViewController = SavedViewController()
        savedViewController.tabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "star"), selectedImage: UIImage(systemName: "star.fill"))
@@ -22,6 +21,5 @@ class TabBarControllerBuilder {
         tabbarController.viewControllers = [homePageViewController, savedViewController]
         
         return tabbarController
-        
     }
 }

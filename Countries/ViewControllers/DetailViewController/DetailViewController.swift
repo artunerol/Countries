@@ -7,15 +7,27 @@
 
 import Foundation
 import UIKit
+import SafariServices
 
 class DetailViewController: UIViewController {
     
-    //MARK: - Computed Properties && Variables
+    //MARK: - Image Computed Property
     
     private lazy var countryImage: UIImageView = {
         let temp = UIImageView()
         temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.backgroundColor = .red
+        
+        return temp
+    }()
+    
+    //MARK: - Country Code Computed Properties
+    
+    private lazy var countryCodeTitle: UILabel = {
+        let temp = UILabel()
+        temp.translatesAutoresizingMaskIntoConstraints = false
+        temp.text = "Country Code:"
+        temp.textAlignment = .left
+        temp.font = .boldSystemFont(ofSize: 18)
         
         return temp
     }()
@@ -23,26 +35,55 @@ class DetailViewController: UIViewController {
     private lazy var countryCode: UILabel = {
         let temp = UILabel()
         temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.text = "Country Code: "
-        temp.textAlignment = .left
+        temp.font = .systemFont(ofSize: 16)
+        temp.text = " "
         
         return temp
     }()
     
-    private lazy var wikiDataButton: UIButton = {
+    //MARK: - Button computed properties
+    
+    private lazy var wikiButton: UIButton = {
         let temp = UIButton()
         temp.translatesAutoresizingMaskIntoConstraints = false
+        temp.backgroundColor = .blue
+        temp.layer.cornerRadius = 10
+        
         return temp
     }()
     
+    private lazy var wikiButtonTitle: UILabel = {
+        let temp = UILabel()
+        temp.translatesAutoresizingMaskIntoConstraints = false
+        temp.text = "For more information"
+        temp.textColor = .white
+        temp.font = .systemFont(ofSize: 18, weight: .semibold)
+        temp.textAlignment = .center
+        temp.clipsToBounds = true
+        
+        return temp
+    }()
+    
+    private lazy var wikiButtonArrow: UIImageView = {
+        let temp = UIImageView()
+        temp.translatesAutoresizingMaskIntoConstraints = false
+        temp.image = UIImage(systemName: "arrowshape.turn.up.right.fill")
+        temp.tintColor = .white
+        
+        return temp
+    }()
+    
+    //MARK: -
+    
     private var viewModel: DetailViewModel
+    private var baseWikiURLString = "https://www.wikidata.org/wiki/"
     
     //MARK: - LifeCycle
     
     init(with viewModel: DetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        setupViews()
+        view.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
@@ -51,31 +92,78 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupViews()
+        configureView()
+        wikiButtonAddTarget()
     }
     
-    //MARK: - Private Funcs
+    //MARK: - View Configurations
+    
+    private func configureView() {
+        countryCode.text = viewModel.countryCode
+        setCountryFlagImage()
+    }
+    
+    private func setCountryFlagImage() {
+        self.viewModel.getImageURL { [weak self] imageURL in
+            //Getting Image url but Cant set the Image. Data From API can not be converted to UIImage
+            let url = URL(string: imageURL)
+            self?.countryImage.load(url: url!)
+        }
+    }
+    
+    //MARK: - Button Configurations
+    
+    private func wikiButtonAddTarget() {
+        wikiButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+    }
+    
+    @objc func buttonPressed() {
+        let urlString = baseWikiURLString + viewModel.wikiDataID
+        guard let url = URL(string: urlString) else { return }
+        let safariVC = SFSafariViewController(url: url)
+        
+        present(safariVC, animated: true, completion: nil)
+    }
+    
+    //MARK: - View Setup
     
     private func setupViews() {
         view.addSubview(countryImage)
-        view.addSubview(countryCode)
-        view.addSubview(wikiDataButton)
+        view.addSubview(countryCodeTitle)
+        view.addSubview(wikiButton)
+        
+        countryCodeTitle.addSubview(countryCode)
+        
+        wikiButton.addSubview(wikiButtonTitle)
+        wikiButton.addSubview(wikiButtonArrow)
         
         setupConstraintsForViews()
     }
     
     private func setupConstraintsForViews() {
         NSLayoutConstraint.activate([
-            countryImage.topAnchor.constraint(equalTo: view.topAnchor,constant: 10),
-            countryImage.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 5),
-            countryImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            countryImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor), //Setting layoutGuide to set the constraints below NavigationBar
+            countryImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            countryImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            countryImage.heightAnchor.constraint(equalToConstant: 200),
             
-            countryCode.topAnchor.constraint(equalTo: countryImage.bottomAnchor,constant: 10),
-            countryCode.leadingAnchor.constraint(equalTo: countryImage.leadingAnchor),
+            countryCodeTitle.topAnchor.constraint(equalTo: countryImage.bottomAnchor,constant: 10),
+            countryCodeTitle.leadingAnchor.constraint(equalTo: countryImage.leadingAnchor,constant: 5),
             
-            wikiDataButton.topAnchor.constraint(equalTo: countryCode.bottomAnchor,constant: 5),
-            wikiDataButton.leadingAnchor.constraint(equalTo: countryCode.leadingAnchor)
+            countryCode.topAnchor.constraint(equalTo: countryCodeTitle.topAnchor,constant: 2),
+            countryCode.leadingAnchor.constraint(equalTo: countryCodeTitle.trailingAnchor,constant: 5),
+            
+            wikiButton.topAnchor.constraint(equalTo: countryCodeTitle.bottomAnchor,constant: 5),
+            wikiButton.leadingAnchor.constraint(equalTo: countryCodeTitle.leadingAnchor),
+            
+            wikiButtonTitle.topAnchor.constraint(equalTo: wikiButton.topAnchor,constant: 5),
+            wikiButtonTitle.leadingAnchor.constraint(equalTo: wikiButton.leadingAnchor,constant: 5),
+            wikiButtonTitle.trailingAnchor.constraint(equalTo: wikiButton.trailingAnchor,constant: -30),
+            
+            wikiButtonArrow.leadingAnchor.constraint(equalTo: wikiButtonTitle.trailingAnchor,constant: 5),
+            wikiButtonArrow.topAnchor.constraint(equalTo: wikiButtonTitle.topAnchor),
+            wikiButtonArrow.centerYAnchor.constraint(equalTo: wikiButtonTitle.centerYAnchor)
         ])
     }
-    
 }
