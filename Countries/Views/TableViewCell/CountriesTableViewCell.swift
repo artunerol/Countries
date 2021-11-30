@@ -90,18 +90,20 @@ class CountriesTableViewCell: UITableViewCell {
     //MARK: - Public Funcs
     
     public func configureCell(with data: CountryData) {
-     
-        if UserDefaults.standard.bool(forKey: data.name) && countryData != nil {
-            saveButton.saveButtonSelected(for: countryData.name)
-        }
         
-        if !UserDefaults.standard.bool(forKey: data.name) && countryData != nil {
-            saveButton.saveButtonUnselected(for: countryData.name)
+        if countryData != nil {
+            if UserDefaults.standard.bool(forKey: data.name) {
+                saveButton.saveButtonSelected(for: countryData.name)
+            }
+            
+            if !UserDefaults.standard.bool(forKey: data.name) {
+                saveButton.saveButtonUnselected(for: countryData.name)
+            }
         }
-        
         self.countryData = data //Getting the api data of the cell
         countryLabel.text = data.name
     }
+    
     
     //MARK: - Save Button Action
     public func addButtonTarget() {

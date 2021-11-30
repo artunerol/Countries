@@ -71,6 +71,14 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let detailViewModel = DetailViewModel()
+        detailViewModel.countryData = SavedViewController.countryDataArray[indexPath.row]
+        navigationController?.pushViewController(DetailViewController(with: detailViewModel), animated: true)
+    }
 }
 
 //MARK: - SaveButtonProtocol
@@ -78,7 +86,6 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
 extension SavedViewController: SaveButtonProtocol {
     
     func saveButtonClicked(with data: CountryData) {
-        print("savebutton clicked in savedViewController")
             SavedViewController.countryDataArray.append(data)
             DispatchQueue.main.async {
                 self.countriesTableView.reloadData()

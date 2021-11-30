@@ -181,7 +181,7 @@ class DetailViewController: UIViewController {
         if isCountrySelected {
             print("save button UNSELECTED in detailVC")
             saveButton.saveButtonUnselected(for: selectedCountry)
-            saveButtonDelegate?.saveButtonClicked(with: viewModel.countryData)
+            saveButtonDelegate?.unsaveButtonClicked(with: viewModel.countryData)
         }
     }
     

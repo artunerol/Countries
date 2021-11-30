@@ -9,11 +9,10 @@ import UIKit
 
 class SavePageBuilder {
     
-//    static func build() -> UIViewController {
-//        let viewModel = SavedPageViewModel()
-//        let vc = SavedViewController(with: viewModel)
-//        
-//        return vc
-//    }
-//    
+    static func build() -> UIViewController {
+        let vc = SavedViewController()
+        
+        return vc
+    }
+    
 }

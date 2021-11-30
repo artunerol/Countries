@@ -74,6 +74,7 @@
 		83F132D52751341100BE27C7 = {
 			isa = PBXGroup;
 			children = (
+				83F1335327559AE600BE27C7 /* README.md */,
 				83F132E02751341100BE27C7 /* Countries */,
 				83F132DF2751341100BE27C7 /* Products */,
 			);
@@ -98,7 +99,6 @@
 				83F132FB275138D500BE27C7 /* Builders */,
 				83F133522755929600BE27C7 /* Others */,
 				83F132EF2751341400BE27C7 /* Info.plist */,
-				83F1335327559AE600BE27C7 /* README.md */,
 			);
 			path = Countries;
 			sourceTree = "<group>";

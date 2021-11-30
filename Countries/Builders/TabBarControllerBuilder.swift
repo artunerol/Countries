@@ -13,7 +13,7 @@ class TabBarControllerBuilder {
         let homePageViewController = HomePageBuilder.build()
        homePageViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill")) // Setting tab bar Item name and images for HomePage
        
-       let savedViewController = SavedViewController()
+       let savedViewController = SavePageBuilder.build()
        savedViewController.tabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "star"), selectedImage: UIImage(systemName: "star.fill"))
         
         let tabbarController = UITabBarController()
