@@ -8,14 +8,16 @@
 import Foundation
 import UIKit
 import SafariServices
+import WebKit
 
 class DetailViewController: UIViewController {
     
     //MARK: - Image Computed Property
-    
-    private lazy var countryImage: UIImageView = {
-        let temp = UIImageView()
+    //Using web kit in order to show the countryFlag Image, because JSON is bringing .svg format of images instead of .jpg
+    private lazy var countryFlagImageWebView : WKWebView = {
+        let temp = WKWebView()
         temp.translatesAutoresizingMaskIntoConstraints = false
+        temp.clipsToBounds = true
         
         return temp
     }()
@@ -73,6 +75,14 @@ class DetailViewController: UIViewController {
         return temp
     }()
     
+    private lazy var saveButton: SaveButton = {
+        let temp = SaveButton()
+        temp.translatesAutoresizingMaskIntoConstraints = false
+        temp.imageView?.tintColor = .black
+        
+        return temp
+    }()
+    
     //MARK: -
     
     private var viewModel: DetailViewModel
@@ -95,6 +105,7 @@ class DetailViewController: UIViewController {
         setupViews()
         configureView()
         wikiButtonAddTarget()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
     }
     
     //MARK: - View Configurations
@@ -108,7 +119,10 @@ class DetailViewController: UIViewController {
         self.viewModel.getImageURL { [weak self] imageURL in
             //Getting Image url but Cant set the Image. Data From API can not be converted to UIImage
             let url = URL(string: imageURL)
-            self?.countryImage.load(url: url!)
+            let request = URLRequest(url: url!)
+            DispatchQueue.main.async {
+                self?.countryFlagImageWebView.load(request)
+            }
         }
     }
     
@@ -129,9 +143,10 @@ class DetailViewController: UIViewController {
     //MARK: - View Setup
     
     private func setupViews() {
-        view.addSubview(countryImage)
         view.addSubview(countryCodeTitle)
         view.addSubview(wikiButton)
+        view.addSubview(countryFlagImageWebView)
+        view.addSubview(saveButton)
         
         countryCodeTitle.addSubview(countryCode)
         
@@ -143,13 +158,13 @@ class DetailViewController: UIViewController {
     
     private func setupConstraintsForViews() {
         NSLayoutConstraint.activate([
-            countryImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor), //Setting layoutGuide to set the constraints below NavigationBar
-            countryImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            countryImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            countryImage.heightAnchor.constraint(equalToConstant: 200),
+            countryFlagImageWebView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor), //Setting layoutGuide to set the constraints below NavigationBar
+            countryFlagImageWebView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            countryFlagImageWebView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            countryFlagImageWebView.heightAnchor.constraint(equalToConstant: 200),
             
-            countryCodeTitle.topAnchor.constraint(equalTo: countryImage.bottomAnchor,constant: 10),
-            countryCodeTitle.leadingAnchor.constraint(equalTo: countryImage.leadingAnchor,constant: 5),
+            countryCodeTitle.topAnchor.constraint(equalTo: countryFlagImageWebView.bottomAnchor,constant: 10),
+            countryCodeTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 5),
             
             countryCode.topAnchor.constraint(equalTo: countryCodeTitle.topAnchor,constant: 2),
             countryCode.leadingAnchor.constraint(equalTo: countryCodeTitle.trailingAnchor,constant: 5),
@@ -163,7 +178,11 @@ class DetailViewController: UIViewController {
             
             wikiButtonArrow.leadingAnchor.constraint(equalTo: wikiButtonTitle.trailingAnchor,constant: 5),
             wikiButtonArrow.topAnchor.constraint(equalTo: wikiButtonTitle.topAnchor),
-            wikiButtonArrow.centerYAnchor.constraint(equalTo: wikiButtonTitle.centerYAnchor)
+            wikiButtonArrow.centerYAnchor.constraint(equalTo: wikiButtonTitle.centerYAnchor),
+            
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -5),
+            saveButton.topAnchor.constraint(equalTo: countryFlagImageWebView.bottomAnchor,constant: 5),
+            
         ])
     }
 }

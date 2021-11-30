@@ -19,12 +19,12 @@ class SaveButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func saveButtonSelected(for country: String) {
+    func saveButtonSelected(for country: String) { //If saveButton is selected, set value for current country as true
         setImage(UIImage(systemName: "star.fill"), for: .normal)
         UserDefaults.standard.set(true, forKey: "\(country)")
     }
     
-    func saveButtonUnselected(for country: String) {
+    func saveButtonUnselected(for country: String) { //If saveButton is selected, set value for current country as false
         setImage(UIImage(systemName: "star"), for: .normal)
         UserDefaults.standard.set(false, forKey: "\(country)")
     }

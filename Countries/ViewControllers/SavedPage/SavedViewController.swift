@@ -73,13 +73,12 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: -
+//MARK: - SaveButtonProtocol
 
 extension SavedViewController: SaveButtonProtocol {
     
     func saveButtonClicked(with data: CountryData) {
             SavedViewController.countryDataArray.append(data)
-            print("countryData in savevc is \(SavedViewController.countryDataArray)")
             DispatchQueue.main.async {
                 self.countriesTableView.reloadData()
             }
@@ -89,6 +88,10 @@ extension SavedViewController: SaveButtonProtocol {
         //Removing related data if unsaved
         SavedViewController.countryDataArray.removeAll { dataToRemove in
             dataToRemove == data
+        }
+        DispatchQueue.main.async {
+            print("unsavedButton")
+            self.countriesTableView.reloadData()
         }
     }
     

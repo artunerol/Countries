@@ -29,6 +29,7 @@ class CountriesTableViewCell: UITableViewCell {
     
     private lazy var saveButton: SaveButton = {
         let temp = SaveButton()
+        temp.imageView?.tintColor = .black
         temp.translatesAutoresizingMaskIntoConstraints = false
         
         return temp
@@ -45,10 +46,9 @@ class CountriesTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        saveButtonDelegate = SavedViewController() //Delegation to SavedViewController
         setupViews()
         viewConfigurations()
-        
-        saveButtonDelegate = SavedViewController() //Delegation to SavedViewController
     }
 
     required init?(coder: NSCoder) {
@@ -66,7 +66,7 @@ class CountriesTableViewCell: UITableViewCell {
     }
     
     private func viewConfigurations() {
-        addButtonAction()
+        addButtonTarget()
     }
 
     private func setupConstraintsForViews() {
@@ -78,8 +78,8 @@ class CountriesTableViewCell: UITableViewCell {
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -(contentView.frame.width/6)), //Setting trailing Anchor for containerView
             
             saveButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
-            saveButton.topAnchor.constraint(equalTo: containerView.topAnchor,constant: 5),
-            saveButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
+            saveButton.topAnchor.constraint(equalTo: containerView.topAnchor,constant: 2),
+            saveButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -2),
             
             countryLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
             countryLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
@@ -90,17 +90,21 @@ class CountriesTableViewCell: UITableViewCell {
     //MARK: - Public Funcs
     
     public func configureCell(with data: CountryData) {
-//        
-//        if UserDefaults.standard.bool(forKey: data.name) {
-//            saveButton.saveButtonSelected(for: countryData.name)
-//        }
+     
+        if UserDefaults.standard.bool(forKey: data.name) && countryData != nil {
+            saveButton.saveButtonSelected(for: countryData.name)
+        }
+        
+        if !UserDefaults.standard.bool(forKey: data.name) && countryData != nil {
+            saveButton.saveButtonUnselected(for: countryData.name)
+        }
         
         self.countryData = data //Getting the api data of the cell
         countryLabel.text = data.name
     }
     
     //MARK: - Save Button Action
-    public func addButtonAction() {
+    public func addButtonTarget() {
         saveButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
@@ -111,13 +115,11 @@ class CountriesTableViewCell: UITableViewCell {
         if !isSaveButtonSelected {
             saveButton.saveButtonSelected(for: countryData.name)
             saveButtonDelegate?.saveButtonClicked(with: countryData) //Delegation for button clicked
-            
         }
         
         if isSaveButtonSelected {
             saveButton.saveButtonUnselected(for: countryData.name)
             saveButtonDelegate?.unsaveButtonClicked(with: countryData)
-            
         }
     }
     
