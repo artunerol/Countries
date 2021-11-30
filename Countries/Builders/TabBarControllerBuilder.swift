@@ -15,7 +15,6 @@ class TabBarControllerBuilder {
        
        let savedViewController = SavedViewController()
        savedViewController.tabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "star"), selectedImage: UIImage(systemName: "star.fill"))
-       
         
         let tabbarController = UITabBarController()
         tabbarController.viewControllers = [homePageViewController, savedViewController]

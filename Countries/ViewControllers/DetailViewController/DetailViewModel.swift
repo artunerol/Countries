@@ -9,11 +9,11 @@ import UIKit
 
 class DetailViewModel {
     
-    var countryCode : String!
-    var wikiDataID: String!
+    var countryData: CountryData!
     
+    ///Getting URL that consist the image URL as String.
     public func getImageURL(with completion: @escaping (String) -> Void) {
-        APIHandler.getDataForCountryImage(for: self.countryCode!) { result in
+        APIHandler.getDataForCountryImage(for: self.countryData.code) { result in
             completion(result.data.flagImageUri)
         }
     }

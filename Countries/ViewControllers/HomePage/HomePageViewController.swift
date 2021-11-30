@@ -84,18 +84,19 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CountriesTableViewCell.identifier, for: indexPath) as! CountriesTableViewCell
         
         let countryData = countryDataFromAPI!.data[indexPath.row]
+        UserDefaults.standard.set(false, forKey: countryData.name) // setting every country's default selected value to "False"
         cell.configureCell(with: countryData)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         let detailViewModel = DetailViewModel()
-        detailViewModel.countryCode = countryDataFromAPI?.data[indexPath.row].code
-        detailViewModel.wikiDataID = countryDataFromAPI?.data[indexPath.row].wikiDataId
+        detailViewModel.countryData = countryDataFromAPI?.data[indexPath.row]
         navigationController?.pushViewController(DetailViewController(with: detailViewModel), animated: true)
         
-        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

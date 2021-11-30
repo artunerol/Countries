@@ -16,12 +16,24 @@ class DetailViewController: UIViewController {
         print("detailviewController deinit")
     }
     
+    //MARK: -
+    private var viewModel: DetailViewModel
+    private var baseWikiURLString = "https://www.wikidata.org/wiki/"
+    private var saveButtonDelegate: SaveButtonProtocol?
+    
+    private lazy var isCountrySelected = UserDefaults.standard.bool(forKey: viewModel.countryData.name)
+    private lazy var selectedCountry = viewModel.countryData.name
+    
     //MARK: - Image Computed Property
     //Using web kit in order to show the countryFlag Image, because JSON is bringing .svg format of images instead of .jpg
     private lazy var countryFlagImageWebView : WKWebView = {
         let temp = WKWebView()
         temp.translatesAutoresizingMaskIntoConstraints = false
         temp.clipsToBounds = true
+        temp.layer.borderWidth = 2
+        temp.layer.borderColor = UIColor.black.cgColor
+        temp.scrollView.isScrollEnabled = false
+        temp.pageZoom = 1.5
         
         return temp
     }()
@@ -47,7 +59,7 @@ class DetailViewController: UIViewController {
         return temp
     }()
     
-    //MARK: - Button computed properties
+    //MARK: - Buttons
     
     private lazy var wikiButton: UIButton = {
         let temp = UIButton()
@@ -87,11 +99,6 @@ class DetailViewController: UIViewController {
         return temp
     }()
     
-    //MARK: -
-    
-    private var viewModel: DetailViewModel
-    private var baseWikiURLString = "https://www.wikidata.org/wiki/"
-    
     //MARK: - LifeCycle
     
     init(with viewModel: DetailViewModel) {
@@ -108,20 +115,26 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         configureView()
+        
         wikiButtonAddTarget()
+        saveButtonAddTarget()
         setupNavigationBar()
+        checkIfCurrentCountryWasSelectedBefore()
+        
+        saveButtonDelegate = SavedViewController()
+        
     }
     
     //MARK: - View Configurations
     
     private func configureView() {
-        countryCode.text = viewModel.countryCode
+        countryCode.text = viewModel.countryData.code
         setCountryFlagImage()
     }
     
     private func setCountryFlagImage() {
         self.viewModel.getImageURL { [weak self] imageURL in
-            //Getting Image url but Cant set the Image. Data From API can not be converted to UIImage
+            //Getting Image url but Cant set the Image. Data From API can not be converted to UIImage.
             let url = URL(string: imageURL)
             let request = URLRequest(url: url!)
             DispatchQueue.main.async {
@@ -133,22 +146,52 @@ class DetailViewController: UIViewController {
     //MARK: - Navigation Bar Configurations
     
     private func setupNavigationBar() {
-        navigationItem.title = viewModel.countryCode
+        navigationItem.title = viewModel.countryData.name
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
     }
     
-    //MARK: - Button Configurations
+    //MARK: - Wiki Button Configurations
     
     private func wikiButtonAddTarget() {
-        wikiButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        wikiButton.addTarget(self, action: #selector(wikiButtonPressed), for: .touchUpInside)
     }
     
-    @objc func buttonPressed() {
-        let urlString = baseWikiURLString + viewModel.wikiDataID
+    @objc func wikiButtonPressed() {
+        //Openning up a SafariViewController to get more details to the user.
+        let urlString = baseWikiURLString + viewModel.countryData.wikiDataId
         guard let url = URL(string: urlString) else { return }
         let safariVC = SFSafariViewController(url: url)
         
         present(safariVC, animated: true, completion: nil)
+    }
+    
+    //MARK: - Save Button Configurations
+    
+    private func saveButtonAddTarget() {
+        saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+    }
+    
+    @objc private func saveButtonPressed() {
+        if !isCountrySelected {
+            print("save button selected in detailVC")
+            saveButton.saveButtonSelected(for: selectedCountry)
+            saveButtonDelegate?.saveButtonClicked(with: viewModel.countryData)
+        }
+        
+        if isCountrySelected {
+            print("save button UNSELECTED in detailVC")
+            saveButton.saveButtonUnselected(for: selectedCountry)
+            saveButtonDelegate?.saveButtonClicked(with: viewModel.countryData)
+        }
+    }
+    
+    private func checkIfCurrentCountryWasSelectedBefore() {
+        if !isCountrySelected {
+            saveButton.saveButtonUnselected(for: selectedCountry)
+        }
+        if isCountrySelected {
+            saveButton.saveButtonSelected(for: selectedCountry)
+        }
     }
     
     //MARK: - View Setup

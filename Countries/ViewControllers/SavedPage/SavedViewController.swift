@@ -78,6 +78,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
 extension SavedViewController: SaveButtonProtocol {
     
     func saveButtonClicked(with data: CountryData) {
+        print("savebutton clicked in savedViewController")
             SavedViewController.countryDataArray.append(data)
             DispatchQueue.main.async {
                 self.countriesTableView.reloadData()
