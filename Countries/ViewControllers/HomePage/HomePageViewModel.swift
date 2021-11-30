@@ -9,8 +9,15 @@ import Foundation
 import UIKit
 
 class HomePageViewModel {
-    
-    public let color = UIColor.white
-    
-}
 
+    var apiResult: CountryDataFromAPI?
+    
+    //Getting API result via viewModel
+    
+    public func getAPIResult(with completion: @escaping () -> Void) {
+        APIHandler.urlRequest() { result in
+            self.apiResult = result
+            completion()
+        }
+    }
+}
