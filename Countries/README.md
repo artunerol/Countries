@@ -7,3 +7,5 @@ APP Navigation:
 - After pressing a star button, you can see the selected countries in "Saved" Tab
 
 - If you want to deselect some countries in "Saved" tab, you need to first navigate to "Home" tab, then go back to "Saved" tab. By doing that, you'll see that the stars are getting filled on "saved" tab.
+
+- In detail page for countries, many country flags have plain white areas on the right hand side. This is happening because api 

@@ -12,6 +12,10 @@ import WebKit
 
 class DetailViewController: UIViewController {
     
+    deinit {
+        print("detailviewController deinit")
+    }
+    
     //MARK: - Image Computed Property
     //Using web kit in order to show the countryFlag Image, because JSON is bringing .svg format of images instead of .jpg
     private lazy var countryFlagImageWebView : WKWebView = {
@@ -105,7 +109,7 @@ class DetailViewController: UIViewController {
         setupViews()
         configureView()
         wikiButtonAddTarget()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
+        setupNavigationBar()
     }
     
     //MARK: - View Configurations
@@ -124,6 +128,13 @@ class DetailViewController: UIViewController {
                 self?.countryFlagImageWebView.load(request)
             }
         }
+    }
+    
+    //MARK: - Navigation Bar Configurations
+    
+    private func setupNavigationBar() {
+        navigationItem.title = viewModel.countryCode
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
     }
     
     //MARK: - Button Configurations
@@ -146,7 +157,6 @@ class DetailViewController: UIViewController {
         view.addSubview(countryCodeTitle)
         view.addSubview(wikiButton)
         view.addSubview(countryFlagImageWebView)
-        view.addSubview(saveButton)
         
         countryCodeTitle.addSubview(countryCode)
         
@@ -178,11 +188,7 @@ class DetailViewController: UIViewController {
             
             wikiButtonArrow.leadingAnchor.constraint(equalTo: wikiButtonTitle.trailingAnchor,constant: 5),
             wikiButtonArrow.topAnchor.constraint(equalTo: wikiButtonTitle.topAnchor),
-            wikiButtonArrow.centerYAnchor.constraint(equalTo: wikiButtonTitle.centerYAnchor),
-            
-            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -5),
-            saveButton.topAnchor.constraint(equalTo: countryFlagImageWebView.bottomAnchor,constant: 5),
-            
+            wikiButtonArrow.centerYAnchor.constraint(equalTo: wikiButtonTitle.centerYAnchor),            
         ])
     }
 }
