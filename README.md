@@ -1,4 +1,4 @@
-README
+
 **What to do when the app has launched**
 
 - Save/Unsave countries with "star" button.
