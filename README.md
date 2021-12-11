@@ -1,6 +1,8 @@
 
 **What to do when the app has launched**
 
+READ
+
 - Save/Unsave countries with "star" button.
 - Navigate to "Saved" tab.
 - If you want to see the star buttons to be filled in "saved" tab, you need to go back to "Home" tab, then back to "Saved" tab.
